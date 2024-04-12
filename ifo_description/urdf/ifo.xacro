@@ -5,6 +5,7 @@
     <xacro:arg name="mavlink_udp_port" default="14560" />
     <xacro:arg name="namespace" default=""/>
     <xacro:arg name="camera" default="true"/>
+    <xacro:arg name="lidar" default="true"/>
 
     <!-- Include base -->
     <xacro:include filename="$(find ifo_description)/urdf/ifo_base.xacro" />
@@ -17,4 +18,30 @@
             <origin xyz="0.12 0 0" rpy="0 0 0" />
         </xacro:realsense_d435i>
     </xacro:if>
+
+    <!-- Include 1D LIDAR at the bottom -->
+    <xacro:if value="$(arg lidar)">
+        <xacro:include filename="$(find ifo_description)/urdf/lidar.xacro" />
+        <xacro:lidar parent="base_link" name="$(arg namespace)/laser">
+            <origin xyz="0 0 0" rpy="0 0 0" />
+        </xacro:lidar>
+    </xacro:if>
+
+    <!-- <include>
+      <uri>model://fpv_cam</uri>
+      <pose>0 0 0 0 0 0</pose>
+    </include> -->
+    <!-- <joint name="fpv_cam_joint" type="fixed">
+      <child>fpv_cam::link</child>
+      <parent>iris::base_link</parent>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <upper>0</upper>
+          <lower>0</lower>
+        </limit>
+      </axis>
+    </joint> -->
+
+
 </robot>

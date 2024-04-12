@@ -126,9 +126,10 @@
       </imu>
 
       <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
-        <robotNamespace></robotNamespace>
+        <robotNamespace/>
         <topicName>${name}/imu</topicName>
         <bodyName>${name}_link</bodyName>
+        <gaussianNoise>0.0</gaussianNoise>
         <updateRateHZ>100.0</updateRateHZ>
         <xyzOffset>0 0 0</xyzOffset>
         <rpyOffset>0 0 0</rpyOffset>
@@ -323,7 +324,7 @@
 
   <!-- ________________________ Realsense PLUGIN  _________________________-->
   <gazebo>
-    <plugin name="/${name}" filename="librealsense_gazebo_plugin.so">
+    <plugin name="${name}" filename="librealsense_gazebo_plugin.so">
       <prefix>${name}_</prefix>
 
       <!-- Color camera settings-->

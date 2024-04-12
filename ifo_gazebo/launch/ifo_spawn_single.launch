@@ -10,14 +10,15 @@
     <arg name="Y" default="0"/>
     <arg name="namespace" default=""/> 
     <arg name="vehicle_name_gazebo" default="ifo001"/>
-    <arg name="ID" default="1"/>
+    <arg name="ID" default="0"/>
     <arg name="emulate_mocap" default="true"/>
     <arg name="camera" default="false"/>
+    <arg name="lidar" default="false"/>
 
     <!-- vehcile model and config -->
     <arg name="est" default="ekf2"/>
     <arg name="vehicle" default="iris"/>
-    <env name="PX4_SIM_MODEL" value="$(arg vehicle)" />
+    <env name="PX4_SIM_MODEL" value="gazebo-classic_$(arg vehicle)" />
     <env name="PX4_ESTIMATOR" value="$(arg est)" />
     <arg name="mavlink_udp_port" default="$(eval 14560 + arg('ID'))"/>
     <arg name="mavlink_tcp_port" default="$(eval 4560 + arg('ID'))"/>
@@ -48,7 +49,7 @@
     </node>
 
     <!-- spawn vehicle -->
-    <param name="robot_description" command="xacro $(find ifo_description)/urdf/ifo.xacro mavlink_udp_port:=$(arg mavlink_udp_port) mavlink_tcp_port:=$(arg mavlink_tcp_port) namespace:=$(arg namespace) camera:=$(arg camera)" />
+    <param name="robot_description" command="xacro $(find ifo_description)/urdf/ifo.xacro mavlink_udp_port:=$(arg mavlink_udp_port) mavlink_tcp_port:=$(arg mavlink_tcp_port) namespace:=$(arg namespace) camera:=$(arg camera) lidar:=$(arg lidar)" />
     <node name="ifo_$(arg ID)_spawn" output="screen" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model $(arg vehicle_name_gazebo) -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg R) -P $(arg P) -Y $(arg Y)"/>
 
     <!-- MAVROS -->
